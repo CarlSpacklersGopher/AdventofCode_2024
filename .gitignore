@@ -3,3 +3,6 @@
 
 # Exclude venv
 my_env/**
+
+# Exclude any swp files
+*.swp
