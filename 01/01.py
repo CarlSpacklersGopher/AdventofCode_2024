@@ -25,7 +25,25 @@ def part_1(puzzle_input:list[list[int]]) -> int:
 
 def part_2(puzzle_input:list[list[int]]) -> int:
     ''' Solves for Part 2. '''
-    return 0
+    lefts = puzzle_input[0]
+    rights = puzzle_input[1]
+
+    score = 0
+    count = 0
+
+    for left in lefts:
+        idx = 0
+        count = 0
+        while True:
+            right = rights[idx]
+            if right > left:
+                break
+            elif left == right:
+                count += 1
+            idx += 1
+        score += left * count
+
+    return score 
 
 if __name__ == '__main__':
     # puzzle_input =  process_input('01/test_input.txt')
