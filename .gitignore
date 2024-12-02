@@ -4,5 +4,6 @@
 # Exclude venv
 my_env/**
 
-# Exclude any swp files
+# Exclude any swp or swo file
 *.swp
+*.swo
