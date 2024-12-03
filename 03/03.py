@@ -18,7 +18,23 @@ def part_1(puzzle_input:str) -> int:
 
 def part_2(puzzle_input:list[str]) -> int:
     ''' Solves for Part 2. '''
-    return 0
+
+    pattern = r"don't\(\)" + '|'
+    pattern += r'do\(\)' + '|'
+    pattern += r'mul\((\d+),(\d+)\)'
+
+    mult_enabled = True
+    products = []
+    for match in re.finditer(pattern, puzzle_input):
+        if match.group(0) == "don't()":
+            mult_enabled = False
+        elif match.group(0) == "do()":
+            mult_enabled = True
+        else:
+            if mult_enabled:
+                products.append(int(match[1]) * int(match[2]))
+                            
+    return sum(products)
 
 if __name__ == '__main__':
     # puzzle_input = process_input('03/test_input.txt')
