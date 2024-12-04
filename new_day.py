@@ -4,6 +4,7 @@ import os
 def make_files(day_str:str):
 
     contents_dayx = f'''
+import sys
 
 def process_input(path: str) -> list[str]:
     \'\'\' Reads the puzzle input. \'\'\'
@@ -19,8 +20,7 @@ def part_2(puzzle_input:list[str]) -> int:
     return 0
 
 if __name__ == '__main__':
-    puzzle_input = process_input('{day_str}/test_input.txt')
-    # puzzle_input = process_input('{day_str}/input.txt')
+    puzzle_input = process_input(sys.argv[1])
     print("Part 1: " + str(part_1(puzzle_input)))
 
     print("Part 2: " + str(part_2(puzzle_input)))
