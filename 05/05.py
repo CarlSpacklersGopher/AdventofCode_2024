@@ -28,7 +28,27 @@ def process_input(path: str) -> tuple:
 
 def part_1(order_rules: dict, page_sequences:list[list[int]]) -> int:
     ''' Solves for Part 1. '''
-    return 0
+    good_seq = [] 
+    isgood = True
+    for seq in page_sequences:
+        for idx, page in enumerate(seq):
+            requirements = set(order_rules.get(page, []))
+            if requirements:
+                following_pages = set(seq[idx:])
+                if following_pages.intersection(requirements):
+                    isgood = False
+                    break
+        if isgood:
+            good_seq.append(seq)
+        isgood = True
+
+    
+    middle_pages = []
+    for seq in good_seq:
+        middle_pages.append(seq[(len(seq) // 2)])
+
+
+    return sum(middle_pages)
 
 def part_2(order_rules: dict, page_sequences:list[list[int]]) -> int:
     ''' Solves for Part 2. '''
