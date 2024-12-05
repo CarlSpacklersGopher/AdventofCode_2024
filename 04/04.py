@@ -1,5 +1,6 @@
 
 import sys
+import re
 
 def process_input(path: str) -> list[str]:
     ''' Reads the puzzle input. '''
@@ -65,6 +66,9 @@ def process_input(path: str) -> list[str]:
             diag_tlbr.append(l_tlbr_slice)
             diag_tlbr.append(r_tlbr_slice)
 
+        diag_trbl = list(set(diag_trbl)) # get rid of duplicates from left/right overlap on start row
+        diag_tlbr = list(set(diag_tlbr))
+
         diag_bltr = [x[::-1] for x in diag_trbl]
         diag_brtl = [x[::-1] for x in diag_tlbr]        
 
@@ -74,11 +78,21 @@ def process_input(path: str) -> list[str]:
             vert_bt,
             diag_trbl,
             diag_bltr,
-            diag_tlbr]
+            diag_tlbr,
+            diag_brtl]
 
 def part_1(puzzle_input:list[str]) -> int:
     ''' Solves for Part 1. '''
-    return 0
+
+    counts = []
+    for direction in puzzle_input:
+        found_count = 0
+        for dir_slice in direction:
+            found_count += len(re.findall('XMAS', dir_slice))
+        counts.append(found_count)
+
+    print(counts)
+    return sum(counts)
 
 def part_2(puzzle_input:list[str]) -> int:
     ''' Solves for Part 2. '''
