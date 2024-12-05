@@ -96,7 +96,27 @@ def part_1(puzzle_input:list[str]) -> int:
 
 def part_2(puzzle_input:list[str]) -> int:
     ''' Solves for Part 2. '''
-    return 0
+
+    # Well I put in all that work to do the diagonals instead of just searching for X's and doing a look-around.
+    # And there's no way to correlate the diagonals to each other.  So I'm just gonna punt instead of rewriting all that.
+
+    # so here we go doing what I should have done earlier anyway
+    x_mas_count = 0
+    grid = puzzle_input[0] # forwards lines
+    for row_num, row in enumerate(grid):
+        for col_num, char in enumerate(row):
+            if (0 < row_num < len(row) - 1) and (0 < col_num < len(row) - 1):
+                if char == 'A':
+                    tl = grid[row_num - 1][col_num - 1]
+                    tr = grid[row_num - 1][col_num + 1]
+                    bl = grid[row_num + 1][col_num - 1]
+                    br = grid[row_num + 1][col_num + 1]
+                    
+
+                    if {tl, br} == {'M', 'S'} and {tr, bl} == {'M', 'S'}:
+                        x_mas_count += 1
+
+    return x_mas_count
 
 if __name__ == '__main__':
     puzzle_input = process_input(sys.argv[1])
