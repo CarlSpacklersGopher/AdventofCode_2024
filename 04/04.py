@@ -113,7 +113,7 @@ def part_2(puzzle_input:list[str]) -> int:
                     br = grid[row_num + 1][col_num + 1]
                     
 
-                    if {tl, br} == {'M', 'S'} and {tr, bl} == {'M', 'S'}:
+                    if {tl, br} == {tr, bl} == {'M', 'S'}:
                         x_mas_count += 1
 
     return x_mas_count
