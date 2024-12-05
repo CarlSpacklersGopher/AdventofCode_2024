@@ -16,7 +16,8 @@ def process_input(path: str) -> list[str]:
         raw = [line.strip() for line in f.readlines()]
         forwards = [x for x in raw]
         backwards = [x[::-1] for x in raw]
-        vert_tb = []
+        
+        # Verticals
         for col_num in range(len(raw[0])):
             tmp = ''
             for row_num in range(len(raw)):
@@ -24,10 +25,30 @@ def process_input(path: str) -> list[str]:
             vert_tb.append(tmp)
         vert_bt = [x[::-1] for x in vert_tb]
 
-        print(f'forward: {forwards}')
-        print(f'backward: {backwards}')
-        print(f'vert_tb: {vert_tb}')
-        print(f'vert_bt: {vert_bt}')
+
+        # Diagonals
+        for col_num in range(len(raw[0])):
+            tmp_trbl = '' 
+            tmp_tlbr = ''
+
+            count = 0
+            while True:
+                if count > len(raw[0]):
+                    break
+                if col_num - count >= 0:
+                    tmp_trbl += raw[count][col_num - count]
+                if col_num + count < len(raw[0]):
+                    tmp_tlbr += raw[count][col_num + count]
+                count += 1
+            
+            print(f'TR -> BL: {tmp_trbl}')
+            print(f'TL -> BR: {tmp_tlbr}')
+            diag_trbl.append(tmp_trbl)
+            diag_tlbr.append(tmp_tlbr)
+
+
+
+
 
     return None
 
