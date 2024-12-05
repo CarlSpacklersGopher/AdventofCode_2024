@@ -27,6 +27,26 @@ def process_input(path: str) -> list[str]:
 
 
         # Diagonals
+        for diag_slice_num in range(len(raw[0])): # Assume square
+            l_trbl_slice = ''
+            r_trbl_slice = ''
+            l_trbl_slice_start = (0, len(raw[0]) - 1 - diag_slice_num)
+            r_trbl_slice_start = (0 + diag_slice_num, len(raw[0]) - 1)
+
+            count = 0
+            slice_complete = False
+            while not slice_complete:
+                if count > len(raw[0]): # max traversal distance is diagonal length
+                    print('TR -> BL (L): ' + l_trbl_slice)
+                    print('TR -> BL (R): ' + r_trbl_slice)
+                    slice_complete = True
+                if l_trbl_slice_start[1] - count >= 0:
+                    l_trbl_slice += raw[l_trbl_slice_start[0] + count][l_trbl_slice_start[1] - count]
+                if r_trbl_slice_start[0] + count < len(raw):
+                    r_trbl_slice += raw[r_trbl_slice_start[0] + count][r_trbl_slice_start[1] - count]
+                count += 1
+
+        '''
         for col_num in range(len(raw[0])):
             tmp_trbl = '' 
             tmp_tlbr = ''
@@ -45,7 +65,7 @@ def process_input(path: str) -> list[str]:
             print(f'TL -> BR: {tmp_tlbr}')
             diag_trbl.append(tmp_trbl)
             diag_tlbr.append(tmp_tlbr)
-
+        '''
 
 
 
