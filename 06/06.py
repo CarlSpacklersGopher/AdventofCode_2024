@@ -16,17 +16,43 @@ def process_input(path: str) -> tuple[tuple[int, int], list[list[str]]]:
 
         return (guard, grid)
 
-def part_1(puzzle_input:list[str]) -> int:
-    ''' Solves for Part 1. '''
-    return 0
+def turn_right(direction: tuple) -> tuple:
+    directions = [(0, -1), # North
+                  (1, 0),  # East
+                  (0, 1),  # South
+                  (-1, 0)  # West
+                  ]
+    next_dir = (directions.index(direction) + 1) % len(directions)
+    return directions[next_dir]
 
-def part_2(puzzle_input:list[str]) -> int:
+
+def part_1(grid: list, guard: tuple) -> int:
+    ''' Solves for Part 1. '''
+    dx, dy = (0, -1) # North
+
+    visited = set()
+    while True:
+        visited.add(guard)
+
+        next_x, next_y = (guard[0] + dx, guard[1] + dy)
+        in_bounds = (0 <= next_x < len(grid[0])) and (0 <= next_y < len(grid))
+        if not in_bounds:
+            break
+        if grid[next_y][next_x] == '#':
+            dx, dy = turn_right((dx, dy))
+
+        guard = (guard[0] + dx, guard[1] + dy)
+
+
+    return len(visited)
+
+def part_2(grid: list, guard: tuple) -> int:
     ''' Solves for Part 2. '''
     return 0
 
 if __name__ == '__main__':
-    puzzle_input = process_input(sys.argv[1])
-    print("Part 1: " + str(part_1(puzzle_input)))
+    guard, grid = process_input(sys.argv[1])
+    print("Part 1: " + str(part_1(grid, guard)))
 
-    print("Part 2: " + str(part_2(puzzle_input)))
+    print("Part 2: " + str(part_2(grid, guard)))
 
