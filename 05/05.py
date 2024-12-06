@@ -26,29 +26,31 @@ def process_input(path: str) -> tuple:
 
         return (order_rules, page_sequences) 
 
+
+def is_ordered(order_rules: dict, sequence: list[int]) -> bool:
+    isordered = True
+    for idx, page in enumerate(sequence):
+        requirements = set(order_rules.get(page, []))
+        if requirements:
+            following_pages = set(sequence[idx:])
+            if following_pages.intersection(requirements):
+                isordered = False
+                break
+    return isordered
+
 def part_1(order_rules: dict, page_sequences:list[list[int]]) -> int:
     ''' Solves for Part 1. '''
     good_seq = [] 
-    isgood = True
     for seq in page_sequences:
-        for idx, page in enumerate(seq):
-            requirements = set(order_rules.get(page, []))
-            if requirements:
-                following_pages = set(seq[idx:])
-                if following_pages.intersection(requirements):
-                    isgood = False
-                    break
-        if isgood:
+        if is_ordered(order_rules, seq):
             good_seq.append(seq)
-        isgood = True
 
-    
     middle_pages = []
     for seq in good_seq:
         middle_pages.append(seq[(len(seq) // 2)])
 
-
     return sum(middle_pages)
+
 
 def part_2(order_rules: dict, page_sequences:list[list[int]]) -> int:
     ''' Solves for Part 2. '''
