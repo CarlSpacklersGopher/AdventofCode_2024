@@ -54,7 +54,40 @@ def part_1(order_rules: dict, page_sequences:list[list[int]]) -> int:
 
 def part_2(order_rules: dict, page_sequences:list[list[int]]) -> int:
     ''' Solves for Part 2. '''
-    return 0
+    not_ordered = []
+    for seq in page_sequences:
+        if not is_ordered(order_rules, seq):
+            not_ordered.append(seq)
+
+    for seq in not_ordered:
+        for idx, page in enumerate(seq):            
+            swap_made = True
+            while True:
+                if swap_made:
+                    page = seq[idx] # something new moved into this idx, so stay here and repeat sort.
+                else:
+                    break
+                requirements = order_rules.get(page, [])
+                if requirements:
+                    following_pages = seq[idx:]
+                    for req in requirements:
+                        if req not in following_pages:
+                            swap_made = False
+                        else:
+                            req_idx = seq.index(req, idx)
+                            seq.insert(req_idx, seq.pop(idx)) # insert current idx 1 place after found requirement
+                            swap_made = True
+                            break
+                else:
+                    swap_made = False
+
+    middle_pages = []
+    for seq in not_ordered:
+        middle_pages.append(seq[(len(seq) // 2)])
+    
+    return sum(middle_pages)
+
+
 
 if __name__ == '__main__':
     order_rules, page_sequences = process_input(sys.argv[1])
