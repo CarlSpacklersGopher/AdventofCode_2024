@@ -25,14 +25,15 @@ def turn_right(direction: tuple) -> tuple:
     next_dir = (directions.index(direction) + 1) % len(directions)
     return directions[next_dir]
 
+def guard_walk(grid: list, guard: tuple) -> list[tuple]:
+    '''Gets a list of all locations the guard has visited, assuming
+       he always turns right when he encounters an obstacle.'''
 
-def part_1(grid: list, guard: tuple) -> int:
-    ''' Solves for Part 1. '''
-    dx, dy = (0, -1) # North
+    dx, dy = (0, -1) # Starting direction is North
 
-    visited = set()
+    visited = []
     while True:
-        visited.add(guard)
+        visited.append(guard)
 
         next_x, next_y = (guard[0] + dx, guard[1] + dy)
         in_bounds = (0 <= next_x < len(grid[0])) and (0 <= next_y < len(grid))
@@ -44,7 +45,12 @@ def part_1(grid: list, guard: tuple) -> int:
         guard = (guard[0] + dx, guard[1] + dy)
 
 
-    return len(visited)
+    return visited
+
+def part_1(grid: list, guard: tuple) -> int:
+    ''' Solves for Part 1. '''
+    visited = guard_walk(grid, guard)
+    return len(set(visited))
 
 def part_2(grid: list, guard: tuple) -> int:
     ''' Solves for Part 2. '''
